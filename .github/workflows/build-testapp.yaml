@@ -1,0 +1,40 @@
+// write a git actions file that authenticates to gcp
+// and builds the testapp
+// and pushes the image to gcr
+// and deploys the image to gke
+// and runs the testapp
+
+name: Build Testapp
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+# checkout sample actions pipeline with 2 or more environments (dev, test, prod)
+# paraemeterise the pipeline to use the same pipeline for all environments
+
+
+jobs:
+  build-testapp:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      # - uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
+        # with:
+           #version: '270.0.0'
+           #service_account_key: ${{ secrets.GCP_SA_KEY }}
+           #project_id: ${{ secrets.GCP_PROJECT_ID }}
+      #- run: gcloud auth configure-docker
+      # lint ts code 
+      - run: docker build -t test-project-nest .
+      # scan image for vulnerabilities 
+      
+      #- run: docker push gcr.io/${{ secrets.GCP_PROJECT_ID }}/testapp:test
+     # - run: gcloud container clusters get-credentials test-cluster --zone us-central1-a --project ${{ secrets.GCP_PROJECT_ID }}
+     # - run: kubectl set image deployment/testapp testapp=gcr.io/${{ secrets.GCP_PROJECT_ID }}/testapp:test
+
+

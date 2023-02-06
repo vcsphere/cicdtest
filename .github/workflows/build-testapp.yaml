@@ -24,7 +24,7 @@ jobs:
            #project_id: ${{ secrets.GCP_PROJECT_ID }}
       #- run: gcloud auth configure-docker
       # lint ts code 
-      - run: docker build -t -f test-project/test-project-nest .
+      - run: docker build -t test-project-nest -f test-project/Dockerfile 
       # scan image for vulnerabilities 
       
       #- run: docker push gcr.io/${{ secrets.GCP_PROJECT_ID }}/testapp:test

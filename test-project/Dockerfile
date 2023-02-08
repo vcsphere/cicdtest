@@ -11,7 +11,7 @@ COPY /test-project/package*.json .
 RUN npm install
 
 # Bundle app source
-COPY /test-project .
+COPY /test-project/ .
 
 # Creates a "dist" folder with the production build
 RUN npm run build

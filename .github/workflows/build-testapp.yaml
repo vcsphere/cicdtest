@@ -23,20 +23,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
-        with:
-           #version: '270.0.0'
-           #- skip_install: "true"
-           #service_account_key: ${{ secrets.GCP_SA_KEY }}
-           #project_id: ${{ secrets.GCP_PROJECT_ID }}
-      #- run: gcloud auth configure-docker
-      # lint ts code 
-      #- run: docker build -t test-project-nest -f test-project/Dockerfile .
-      # scan image for vulnerabilities 
-      
-      #- run: docker push gcr.io/${{ secrets.GCP_PROJECT_ID }}/testapp:test
-     # - run: gcloud container clusters get-credentials test-cluster --zone us-central1-a --project ${{ secrets.GCP_PROJECT_ID }}
-     # - run: kubectl set image deployment/testapp testapp=gcr.io/${{ secrets.GCP_PROJECT_ID }}/testapp:test
+
+      - id: 'auth'
+      name: 'Authenticate to Google Cloud'
+      uses: 'google-github-actions/auth@v1'
+      with:
+        credentials_json: '${{secrets.GCP_APPENGINE_SA}}'
+
+ 
 
      # BEGIN - Docker auth and build (NOTE: If you already have a container image, these Docker steps can be omitted)
 
@@ -44,8 +38,8 @@ jobs:
 
       - name: Build and Push Container
         run: |-
-          docker build -t "${{ env.GAR_LOCATION }}-docker.pkg.dev/${{ secrets.PROJECT_ID }}/${{ env.SERVICE }}:${{ github.sha }}" -f test-project/Dockerfile 
-          docker push "${{ env.GAR_LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.SERVICE }}:${{ github.sha }}"
+          docker build -t "${{ env.GAR_LOCATION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/${{ env.SERVICE }}:${{ github.sha }}" -f test-project/Dockerfile 
+          docker push "${{ env.GAR_LOCATION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/${{ env.SERVICE }}:${{ github.sha }}"
 
       # END - Docker auth and build
   

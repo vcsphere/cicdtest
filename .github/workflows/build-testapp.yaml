@@ -20,6 +20,7 @@ jobs:
       # - uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
         # with:
            #version: '270.0.0'
+           #- skip_install: "true"
            #service_account_key: ${{ secrets.GCP_SA_KEY }}
            #project_id: ${{ secrets.GCP_PROJECT_ID }}
       #- run: gcloud auth configure-docker
@@ -30,5 +31,28 @@ jobs:
       #- run: docker push gcr.io/${{ secrets.GCP_PROJECT_ID }}/testapp:test
      # - run: gcloud container clusters get-credentials test-cluster --zone us-central1-a --project ${{ secrets.GCP_PROJECT_ID }}
      # - run: kubectl set image deployment/testapp testapp=gcr.io/${{ secrets.GCP_PROJECT_ID }}/testapp:test
+  
+    
+  deploy-testapp-appengine:
 
+    # Add "id-token" with the intended permissions.
+    permissions:
+      contents: 'read'
+      id-token: 'write'
+    steps:
+    # actions/checkout MUST come before auth
+    - uses: 'actions/checkout@v3'
 
+    - id: 'auth'
+      name: 'Authenticate to Google Cloud'
+      uses: 'google-github-actions/auth@v1'
+      with:
+      # service_account: '${{ secrets.WIF_SERVICE_ACCOUNT }}' # e.g. - my-service-account@my-project.iam.gserviceaccount.com
+      credentials_json: '${{ secrets.GCP_APPENGINE_SA  }}'
+
+    - id: 'deploy'
+      uses: 'google-github-actions/deploy-appengine@v1'
+
+    # Example of using the output
+    - id: 'test'
+      run: 'curl "${{ steps.deploy.outputs.url }}"'

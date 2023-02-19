@@ -39,6 +39,7 @@ jobs:
     permissions:
       contents: 'read'
       id-token: 'write'
+    runs-on: ubuntu-latest
     steps:
     # actions/checkout MUST come before auth
     - uses: 'actions/checkout@v3'

@@ -37,12 +37,13 @@ jobs:
 
       - name: Build and Push Container
         run: |-
-          docker build -t "${{ env.GAR_LOCATION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/${{ env.SERVICE }}:${{ github.sha }}" -f test-project/Dockerfile 
+          docker build -t "${{ env.GAR_LOCATION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/${{ env.SERVICE }}:${{ github.sha }}" ./ 
           docker push "${{ env.GAR_LOCATION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/${{ env.SERVICE }}:${{ github.sha }}"
 
         # END - Docker auth and build
 
   deploy-testapp-appengine:
+    needs: build-testapp
     # Add "id-token" with the intended permissions.
     permissions:
       contents: "read"

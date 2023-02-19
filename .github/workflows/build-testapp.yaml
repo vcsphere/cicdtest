@@ -22,12 +22,15 @@ jobs:
   build-testapp:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
+    # actions/checkout MUST come before auth
+    - uses: 'actions/checkout@v3'
 
     - id: 'auth'
       name: 'Authenticate to Google Cloud'
       uses: 'google-github-actions/auth@v1'
       with:
+      # workload_identity_provider: 'projects/123456789/locations/global/workloadIdentityPools/my-pool/providers/my-provider'
+      # service_account: '${{ secrets.WIF_SERVICE_ACCOUNT }}' # e.g. - my-service-account@my-project.iam.gserviceaccount.com
         credentials_json: '${{secrets.GCP_APPENGINE_SA}}'
 
  
@@ -54,14 +57,6 @@ jobs:
     steps:
     # actions/checkout MUST come before auth
     - uses: 'actions/checkout@v3'
-
-    - id: 'auth'
-      name: 'Authenticate to Google Cloud'
-      uses: 'google-github-actions/auth@v1'
-      with:
-      # workload_identity_provider: 'projects/123456789/locations/global/workloadIdentityPools/my-pool/providers/my-provider'
-      # service_account: '${{ secrets.WIF_SERVICE_ACCOUNT }}' # e.g. - my-service-account@my-project.iam.gserviceaccount.com
-        credentials_json: '${{secrets.GCP_APPENGINE_SA}}'
 
     - id: 'deploy'
       uses: 'google-github-actions/deploy-appengine@v1'

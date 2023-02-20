@@ -8,3 +8,7 @@ instance_class: F4
 automatic_scaling:
   min_num_instances: 1
   max_num_instances: 2
+
+network:
+  forwarded_ports:
+    - 8080/http

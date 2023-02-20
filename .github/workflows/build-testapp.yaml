@@ -48,6 +48,12 @@ jobs:
     steps:
       - uses: "actions/checkout@v3"
 
+      - id: "auth"
+        name: "Authenticate to Google Cloud"
+        uses: "google-github-actions/auth@v1"
+        with:
+          credentials_json: "${{ secrets.GCP_APPENGINE_SA }}"
+
       - id: "deploy"
         uses: "google-github-actions/deploy-appengine@v1"
         with:

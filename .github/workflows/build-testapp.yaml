@@ -13,7 +13,6 @@ env:
   GAR_NAME: artifact-registry-dev
   SERVICE: test-app
   REGION: europe-west3
-  GCP_CICD_SA: "${{secrets.GCP_CICD_SA}}"
 
 jobs:
   build-testapp:
@@ -25,7 +24,7 @@ jobs:
         name: "Authenticate to Google Cloud"
         uses: "google-github-actions/auth@v1"
         with:
-          credentials_json: "${{ secrets.GCP_CICD_SA }}"
+          credentials_json: "${{ secrets.GCP_APPENGINE_SA }}"
 
         # BEGIN - Docker auth and build (NOTE: If you already have a container image, these Docker steps can be omitted)
 

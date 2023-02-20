@@ -58,7 +58,7 @@ jobs:
         uses: "google-github-actions/deploy-appengine@v1"
         with:
           project_id: "${{ secrets.GCP_PROJECT_ID }}"
-          image_url: "${{ env.GAR_LOCATION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/${{ env.SERVICE }}:${{ github.sha }}"
+          image_url: "${{ env.GAR_LOCATION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/${{env.GAR_NAME}}/${{ env.SERVICE }}:${{ github.sha }}"
           working_directory: "test-project"
           deliverables: "../test-project/app.yaml"
 

@@ -40,13 +40,16 @@ jobs:
   # END - Docker auth and build
 
   deploy-testapp-appengine:
-    needs: build-testapp
     permissions:
       contents: "read"
       id-token: "write"
     runs-on: ubuntu-latest
     steps:
       - uses: "actions/checkout@v3"
+
+      #Checking if the app build successfully
+      #  - name: npm install
+      #    run: npm install && npm run build
 
       - id: "auth"
         name: "Authenticate to Google Cloud"

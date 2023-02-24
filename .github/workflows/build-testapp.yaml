@@ -48,8 +48,8 @@ jobs:
       - uses: "actions/checkout@v3"
 
       #Checking if the app build successfully
-      #  - name: npm install
-      #    run: npm install && npm run build
+      - name: npm install
+        run: npm install && npm run build
 
       - id: "auth"
         name: "Authenticate to Google Cloud"

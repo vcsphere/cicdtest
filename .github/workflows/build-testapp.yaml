@@ -62,7 +62,7 @@ jobs:
         with:
           project_id: "${{ secrets.GCP_PROJECT_ID }}"
           #    image_url: "${{ env.GAR_LOCATION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/${{env.GAR_NAME}}/${{ env.SERVICE }}:${{ github.sha }}"
-          working_directory: "/test-project/"
+          working_directory: "test-project"
           deliverables: app.yaml"
 
       # Example of using the output

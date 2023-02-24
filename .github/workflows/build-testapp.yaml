@@ -10,7 +10,7 @@ on:
 
 env:
   GAR_LOCATION: europe-west3
-  GAR_NAME: artifact-registry-dev
+  # GAR_NAME: artifact-registry-dev
   SERVICE: test-app
   REGION: europe-west3
 
@@ -62,8 +62,8 @@ jobs:
         with:
           project_id: "${{ secrets.GCP_PROJECT_ID }}"
           #    image_url: "${{ env.GAR_LOCATION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/${{env.GAR_NAME}}/${{ env.SERVICE }}:${{ github.sha }}"
-          #    working_directory: "test-project"
-          deliverables: "../test-project/app.yaml"
+          working_directory: "../test-project/"
+          deliverables: app.yaml"
 
       # Example of using the output
       - id: "test"
